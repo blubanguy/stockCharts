@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
+import Nav from "./Nav.js";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
-  );
+class App extends Component {
+  render(){
+    return (
+      <div className="App bg-dark-blue">
+        <Nav />
+        {/* 
+        
+        */}
+      </div>);
+  }
 }
 
 export default App;
