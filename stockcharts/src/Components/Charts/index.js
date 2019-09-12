@@ -9,39 +9,55 @@ const styles = {
         overflowY: 'auto'}
 };
 
-export default ({ exercises }) => {
+export default ({
+    exercises,
+    category,
+    onSelect,
+    exercise: {
+        id,
+        title = 'Welcome!',
+        description = 'Please select an exercise from the list on the left'
+    } 
+    }) => {
     return(
     <Grid container>
         <Grid item sm>
             <Paper style={styles.Paper}>
                 {exercises.map(([group, exercises]) =>
-                    <Fragment>
+                    !category || category === group
+                    ?<Fragment key={group}>
                         <Typography 
-                        variant="subtitle1"
-                        style={{textTransform: 'capitalize'}}>
+                            variant="subtitle1"
+                            style={{textTransform: 'capitalize'}}>
                             {group}
                         </Typography>
                         <List component="ul" aria-label="secondary mailbox folders">
-                            {exercises.map(({ title }) =>
-                                <ListItem button>
-                                    <ListItemText primary= {title} />
+                            {exercises.map(({ id, title }) =>
+                                <ListItem 
+                                key={id}
+                                button
+                                onClick = {() => onSelect(id)} 
+                                >
+                                    <ListItemText 
+                                    primary = {title}
+                                    />
                                 </ListItem>
                             )}    
                         </List>
                     </Fragment>
-
+                    :null
                 )}
             </Paper>
         </Grid>
         <Grid item sm>
             <Paper style={styles.Paper}>
                 <Typography variant="h3">
-                    Welcome!
+                    {title}
                 </Typography> 
                 <Typography 
                 variant="body1"
                 style={{marginTop: 20}}>
-                    Please select an exercise from the list on the left
+                    {description}
                 </Typography> 
             </Paper>
         </Grid>

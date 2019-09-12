@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {AppBar, Toolbar, Typography} from '@material-ui/core';
+import CreateDialog from '../Charts/Dialogs/Create'
 
 export default class Nav extends Component {
   constructor(props){
@@ -11,7 +12,8 @@ export default class Nav extends Component {
     return (
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="subtitle1" color="inherit">StockCharts</Typography>
+          <Typography variant="subtitle1" color="inherit" style={{flex: 1}}>StockCharts</Typography>
+          <CreateDialog />
         </Toolbar>
       </AppBar>
     );
