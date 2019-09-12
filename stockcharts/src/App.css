@@ -1,11 +1,7 @@
-.App {
-  text-align: center;
-}
-
-nav{
+nav .MuiListItem-button{
   display: flex;
-  width: 100%;
   height: 100px;
+  flex-direction: column;
 }
 
 .Nav a{
@@ -55,4 +51,20 @@ nav{
 
 input{
   width: 100%;
+}
+
+.menuButton{
+  color: black;
+}
+
+.MuiDrawer-paperAnchorDockedLeft {
+  background-color: blue;
+}
+
+.MuiPaper-root {
+  background-color: blue;
+}
+
+.MuiToolbar-root button {
+  margin-left: 200px;
 }
