@@ -26,36 +26,39 @@ class App extends Component {
     }, initExercises));
   }
 
-  handleCategorySelect = category => {
+  handleCategorySelect = category =>
     this.setState({
       category,
       exercise: {}
     })
-  }
 
-  handleExerciseSelect  = id => {
+  handleExerciseSelect  = id =>
     this.setState(({exercises}) => ({
       exercise: exercises.find(ex => ex.id === id)
     }))
-  }
 
-  handleExerciseCreate = exercise => {
+  handleExerciseCreate = exercise => 
     this.setState(({ exercises }) => ({
       exercises: [
         ...exercises,
         exercise
       ]
     }))
-  }
 
-  handleExerciseDelete = id => {
+  handleExerciseDelete = id =>
     this.setState(({ exercises }) => ({
       exercises: exercises.filter(ex => ex.id !== id)
     }))
-  }
+
+  handleExerciseSelectEdit = (id, exercises) =>
+    this.setState(({exercises}) => ({
+      exercise: exercises.find(ex => ex.id === id),
+      editMode: true
+    }))
+
   render(){
     const exercises = this.getExercisesByMuscles(),
-      { category, exercise } = this.state;
+      { category, editMode, exercise } = this.state;
     return (
       <div className="App">
         <Nav 
@@ -64,9 +67,11 @@ class App extends Component {
         <Panes 
           exercises={exercises}
           category={category}
+          editMode={editMode}
           onSelect={this.handleExerciseSelect}
           exercise={exercise}
           onDelete={this.handleExerciseDelete}
+          onEdit={this.handleExerciseSelectEdit}
           />
         <Footer 
         muscles={muscles}
