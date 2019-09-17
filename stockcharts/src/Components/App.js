@@ -1,85 +1,46 @@
 import React, { Component } from 'react';
-import '../App.css'
-import {Nav, Footer} from "./Layouts";
-import Panes from "./Charts";
-import {muscles, exercises} from "../store.js";
+import { Grid } from '@material-ui/core';
+import Nav from './Nav';
+import Chart from './Chart';
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      exercises,
-      exercise: {}
+export default class extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggedIn: false
+        }
     }
-  }
 
-  getExercisesByMuscles() {
-    const initExercises = muscles.reduce((exercises, category) => ({
-      ...exercises,
-      [category]: []
-    }), {})
-    
-    return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
-      const { muscles } = exercise;
-      exercises[muscles] = [...exercises[muscles], exercise]
-      return exercises;
-    }, initExercises));
-  }
+    openDrawer = () => {
+        this.setState({
+            open: true
+        })
+    }
+    handleClickAway = () => {
+        this.setState({
+            open: false
+        })
+    }
 
-  handleCategorySelect = category =>
-    this.setState({
-      category,
-      exercise: {}
-    })
-
-  handleExerciseSelect  = id =>
-    this.setState(({exercises}) => ({
-      exercise: exercises.find(ex => ex.id === id)
-    }))
-
-  handleExerciseCreate = exercise => 
-    this.setState(({ exercises }) => ({
-      exercises: [
-        ...exercises,
-        exercise
-      ]
-    }))
-
-  handleExerciseDelete = id =>
-    this.setState(({ exercises }) => ({
-      exercises: exercises.filter(ex => ex.id !== id)
-    }))
-
-  handleExerciseSelectEdit = (id, exercises) =>
-    this.setState(({exercises}) => ({
-      exercise: exercises.find(ex => ex.id === id),
-      editMode: true
-    }))
-
-  render(){
-    const exercises = this.getExercisesByMuscles(),
-      { category, editMode, exercise } = this.state;
-    return (
-      <div className="App">
-        <Nav 
-        muscles={muscles}
-        onExerciseCreate={this.handleExerciseCreate}/>
-        <Panes 
-          exercises={exercises}
-          category={category}
-          editMode={editMode}
-          onSelect={this.handleExerciseSelect}
-          exercise={exercise}
-          onDelete={this.handleExerciseDelete}
-          onEdit={this.handleExerciseSelectEdit}
-          />
-        <Footer 
-        muscles={muscles}
-        onSelect={this.handleCategorySelect}
-        category={category}
-        />
-      </div>);
-  }
+    render () {
+        const { isLoggedIn, open } = this.state;
+        return (
+            <Grid container direction='column' alignItems='stretch'>
+                <Grid 
+                item style={{flexGrow: 1}}
+                ref={ (gridElement => this.gridElement = gridElement)}
+                >
+                    <Nav 
+                    handleClickAway={this.handleClickAway}
+                    onDrawerOpen={this.openDrawer}
+                    open={open}
+                    isLoggedin={isLoggedIn}
+                    />
+                </Grid>
+                <Grid item>
+                    <Chart />
+                </Grid>
+            </Grid>
+        );
+    }
 }
-
-export default App;
