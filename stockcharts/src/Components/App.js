@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
 import Nav from './Nav';
 import Chart from './Chart';
+import Login from './Login';
 
 export default class extends Component {
     constructor(props){
@@ -25,6 +26,7 @@ export default class extends Component {
     render () {
         const { isLoggedIn, open } = this.state;
         return (
+            isLoggedIn?
             <Grid container direction='column' alignItems='stretch'>
                 <Grid 
                 item style={{flexGrow: 1}}
@@ -41,6 +43,7 @@ export default class extends Component {
                     <Chart />
                 </Grid>
             </Grid>
+            :<Login />
         );
     }
 }
